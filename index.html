@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Puzzle</title>
+    <script src="snapfit.js"></script>
+</head>
+
+<body>
+    <input type="file" id="pic" accept="image/*" onchange="loadimage()"><br><br>
+
+    <div style="display: none;" id="content"><img id="puzzle" onLoad="snapfit.add(this, {aopacity:0.0001, mixed:true, polygon:true, space:20}); loadImageFromLs();" width="800"
+            height="400" src="" alt="puzzle will load here">
+
+    </div>
+
+    <strong>Level</strong> <select id="level" size="1"
+        onchange="snapfit.reset(document.getElementById('puzzle'),parseInt(this.options[this.selectedIndex].value));">
+        <option value="0">extreme low</option>
+        <option value="3" selected="selected">medium</option>
+        <option value="6">extreme high</option>
+    </select>
+
+    <p>Press
+        <br>
+        "Enter" to solve the puzzle,
+        <br>
+        "Backspace to reshuffle",
+    </p>
+
+    <button onclick="reset()">Reset</button>
+
+    <script>
+        function loadimage() {
+            let file = document.querySelector('input[type=file]').files[0]; //sames as here
+            let reader = new FileReader();
+
+            reader.onloadend = function () {
+                document.getElementById("puzzle").src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file); //reads the data as a URL
+            } else {
+                document.getElementById("puzzle").src = "";
+            }
+            document.getElementById("pic").style.display = "none";
+            document.getElementById("content").style.display = "block";
+        }
+
+        function reset() {
+            location.reload();
+        }
+    </script>
+</body>
+
+</html>
